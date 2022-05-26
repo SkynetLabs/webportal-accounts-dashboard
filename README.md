@@ -1,3 +1,5 @@
+[![Release](https://github.com/SkynetLabs/webportal-accounts-dashboard/actions/workflows/ci_release.yml/badge.svg)](https://github.com/SkynetLabs/webportal-accounts-dashboard/actions/workflows/ci_release.yml)
+
 # Skynet Account Dashboard
 
 Code behind [account.skynetpro.net](https://account.skynetpro.net/)

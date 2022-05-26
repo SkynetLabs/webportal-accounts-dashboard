@@ -15,7 +15,9 @@
     "serve": "gatsby serve --prefix-paths",
     "clean": "gatsby clean",
     "lint": "eslint .",
-    "prettier": "prettier .",
+    "prettier": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "echo 'WARN: no test script set'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o storybook-build"
   },
