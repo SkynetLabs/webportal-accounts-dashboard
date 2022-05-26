@@ -30,3 +30,7 @@ With the file configured, run `yarn develop:secure` -- it will run `gatsby devel
 If you're on macOS, you may need to `sudo` the command to successfully bind to port `443` (https).
 
 Gatsby will automatically add a proper entry to your `/etc/hosts` file and clean it up when process exits.
+
+## History
+
+The original v1 dashboard can be found in the [skynet-webportal](https://github.com/SkynetLabs/skynet-webportal) [deploy-2022-05-17](https://github.com/SkynetLabs/skynet-webportal/releases/tag/deploy-2022-05-17) tag.
