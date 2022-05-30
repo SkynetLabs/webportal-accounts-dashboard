@@ -152,7 +152,7 @@ export const AddSponsorKeyForm = forwardRef(({ onSuccess }, ref) => {
                         <TextField
                           type="text"
                           name="nextSkylink"
-                          placeholder={`Paste${skylinks.length > 0 ? " next" : " first"} skylink here`}
+                          placeholder={`Paste ${skylinks.length > 0 ? "next" : "first"} skylink here`}
                           error={errors.nextSkylink}
                           touched={touched.nextSkylink}
                           onKeyPress={(event) => {
