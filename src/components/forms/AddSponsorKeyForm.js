@@ -28,11 +28,17 @@ const skylinkValidator = (optional) => (value) => {
 const newSponsorKeySchema = Yup.object().shape({
   name: Yup.string(),
   skylinks: Yup.array().of(Yup.string().test("skylink", "Provide a valid Skylink", skylinkValidator(false))),
-  nextSkylink: Yup.string().when("skylinks", {
-    is: (skylinks) => skylinks.length === 0,
-    then: (schema) => schema.test("skylink", "Provide a valid Skylink", skylinkValidator(true)),
-    otherwise: (schema) => schema.test("skylink", "Provide a valid Skylink", skylinkValidator(true)),
-  }),
+  nextSkylink: Yup.string()
+    .when("skylinks", {
+      is: (skylinks) => skylinks.length === 0,
+      then: (schema) => schema.test("skylink", "Provide a valid Skylink", skylinkValidator(false)),
+      otherwise: (schema) => schema.test("skylink", "Provide a valid Skylink", skylinkValidator(true)),
+    })
+    .test(
+      "uniqueSkylink",
+      "This Skylink is already on the list",
+      (nextSkylink, context) => !context.parent.skylinks.includes(nextSkylink)
+    ),
 });
 
 const State = {
@@ -121,9 +127,7 @@ export const AddSponsorKeyForm = forwardRef(({ onSuccess }, ref) => {
                     setFieldValue("nextSkylink", "", false);
                     setFieldTouched("nextSkylink", false);
                   };
-                  const isNextSkylinkInvalid = Boolean(
-                    errors.nextSkylink || !touched.nextSkylink || !values.nextSkylink
-                  );
+                  const isNextSkylinkInvalid = Boolean(errors.nextSkylink || !values.nextSkylink);
 
                   return (
                     <div className="flex flex-col gap-2">
@@ -148,7 +152,7 @@ export const AddSponsorKeyForm = forwardRef(({ onSuccess }, ref) => {
                         <TextField
                           type="text"
                           name="nextSkylink"
-                          placeholder={`Paste next skylink here`}
+                          placeholder={`Paste${skylinks.length > 0 ? " next" : " first"} skylink here`}
                           error={errors.nextSkylink}
                           touched={touched.nextSkylink}
                           onKeyPress={(event) => {

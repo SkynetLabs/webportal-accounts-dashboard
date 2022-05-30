@@ -7,24 +7,26 @@ import { Button } from "../Button";
 import { TextField } from "../Form/TextField";
 import { CircledProgressIcon, PlusIcon } from "../Icons";
 
-const newSkylinkSchema = Yup.object().shape({
-  skylink: Yup.string()
-    .required("Skylink is required")
-    .test("skylink", "Provide a valid Skylink", (value) => {
-      try {
-        return parseSkylink(value) !== null;
-      } catch {
-        return false;
-      }
-    }),
-});
+const newSkylinkSchema = (existingSkylinks) =>
+  Yup.object().shape({
+    skylink: Yup.string()
+      .required("Skylink is required")
+      .test("skylink", "Provide a valid Skylink", (value) => {
+        try {
+          return parseSkylink(value) !== null;
+        } catch {
+          return false;
+        }
+      })
+      .test("uniqueSkylink", "This Skylink is already on the list", (value) => !existingSkylinks.includes(value)),
+  });
 
-export const AddSkylinkToSponsorKeyForm = ({ addSkylink }) => (
+export const AddSkylinkToSponsorKeyForm = ({ addSkylink, skylinks }) => (
   <Formik
     initialValues={{
       skylink: "",
     }}
-    validationSchema={newSkylinkSchema}
+    validationSchema={newSkylinkSchema(skylinks)}
     onSubmit={async ({ skylink }, { resetForm }) => {
       if (await addSkylink(parseSkylink(skylink))) {
         resetForm();
@@ -48,7 +50,7 @@ export const AddSkylinkToSponsorKeyForm = ({ addSkylink }) => (
           {isSubmitting ? (
             <CircledProgressIcon size={38} className="text-palette-300 animate-[spin_3s_linear_infinite]" />
           ) : (
-            <Button type="submit" className="px-2.5" aria-label="Add this skylink">
+            <Button type="submit" className="px-2.5" aria-label="Add this skylink" disabled={Boolean(errors.skylink)}>
               <PlusIcon size={14} />
             </Button>
           )}
@@ -60,4 +62,5 @@ export const AddSkylinkToSponsorKeyForm = ({ addSkylink }) => (
 
 AddSkylinkToSponsorKeyForm.propTypes = {
   addSkylink: PropTypes.func.isRequired,
+  skylinks: PropTypes.arrayOf(PropTypes.string),
 };
