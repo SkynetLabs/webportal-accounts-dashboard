@@ -24,6 +24,7 @@ const AccountPage = () => {
   const [state, setState] = useState(State.Pure);
   const [removalInitiated, setRemovalInitiated] = useState(false);
   const isLargeScreen = useMedia(`(min-width: ${theme.screens.xl})`);
+  const hasActiveSubscription = user.tier > 1 && !user.subscriptionCancelAtPeriodEnd;
 
   const prompt = () => setRemovalInitiated(true);
   const abort = () => setRemovalInitiated(false);
@@ -82,6 +83,15 @@ const AccountPage = () => {
                 </HighlightedLink>{" "}
                 them to Skynet.
               </p>
+              {hasActiveSubscription && (
+                <Alert $variant="info" className="mt-4">
+                  Please make sure to{" "}
+                  <HighlightedLink as="a" href="/api/stripe/billing" target="_blank" rel="noreferrer">
+                    cancel your subscription in Stripe
+                  </HighlightedLink>{" "}
+                  prior to deleting your account.
+                </Alert>
+              )}
             </div>
             <button
               type="button"
