@@ -32,7 +32,7 @@ const EmailConfirmationPage = ({ location }) => {
 
         timer = setTimeout(() => {
           navigate("/");
-        }, 3000);
+        }, 5000);
         setState(State.Success);
       } catch (err) {
         // Don't show an error message if request was aborted due to `token` changing.
