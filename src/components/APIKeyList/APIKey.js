@@ -145,7 +145,7 @@ export const APIKey = ({ apiKey, onRemoved, onEdited, onRemovalError }) => {
 
           <div className="flex flex-col gap-4">
             {error && <Alert $variant="error">{error}</Alert>}
-            <AddSkylinkToSponsorKeyForm addSkylink={addSkylink} />
+            <AddSkylinkToSponsorKeyForm addSkylink={addSkylink} skylinks={skylinks} />
           </div>
           <div className="flex gap-4 justify-center mt-4">
             <Button onClick={closeEditModal}>Close</Button>
