@@ -70,7 +70,7 @@ const DeveloperSettingsPage = () => {
             ) : (
               <div className="mt-4">
                 {sponsorKeys?.length > 0 ? (
-                  <APIKeyList title="Your public keys" keys={sponsorKeys} reloadKeys={() => refreshState(true)} />
+                  <APIKeyList title="Your sponsor keys" keys={sponsorKeys} reloadKeys={() => refreshState(true)} />
                 ) : (
                   <Alert $variant="info">No sponsor keys found.</Alert>
                 )}
