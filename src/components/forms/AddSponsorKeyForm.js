@@ -107,7 +107,7 @@ export const AddSponsorKeyForm = forwardRef(({ onSuccess }, ref) => {
                 type="text"
                 id="name"
                 name="name"
-                label="Sponsor API Key Name"
+                label="Sponsor Key Name"
                 placeholder="my_applications_statistics"
                 error={errors.name}
                 touched={touched.name}
