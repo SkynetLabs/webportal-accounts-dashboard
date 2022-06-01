@@ -53,8 +53,13 @@ const DeveloperSettingsPage = () => {
               Sponsor keys allow users without an account on this portal to download skylinks covered by the API key.
             </p>
             <p>
-              Learn more about sponsoring content with Sponsor API Keys{" "}
-              <HighlightedLink as="a" href="#">
+              Learn more about sponsoring content with Sponsor Keys{" "}
+              <HighlightedLink
+                as="a"
+                href="https://docs.skynetlabs.com/skynet-topics/portal-accounts/api-and-sponsor-keys"
+                target="_blank"
+                rel="noreferrer"
+              >
                 here
               </HighlightedLink>
               .
