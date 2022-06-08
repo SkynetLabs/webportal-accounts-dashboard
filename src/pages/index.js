@@ -48,24 +48,10 @@ const IndexPage = () => {
                     </TabPanel>
                   </Tabs>
                 </Panel>,
-                <Panel
-                  title={
-                    <>
-                      <ArrowRightIcon /> Usage
-                    </>
-                  }
-                  className="h-[330px]"
-                >
+                <Panel title="Usage" className="h-[330px]">
                   <CurrentUsage />
                 </Panel>,
-                <Panel
-                  title={
-                    <>
-                      <ArrowRightIcon /> Current plan
-                    </>
-                  }
-                  className="h-[330px]"
-                >
+                <Panel title="Current plan" className="h-[330px]">
                   <CurrentPlan />
                 </Panel>,
               ]}
