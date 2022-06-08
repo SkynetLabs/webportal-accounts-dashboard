@@ -29,9 +29,9 @@ const useUsageData = () => {
 
     if (hasData && !hasError) {
       setUsage({
-        filesUsed: stats?.numUploads,
+        filesUsed: stats?.numUploadsTotal,
         filesLimit: activePlan?.limits?.maxNumberUploads,
-        storageUsed: stats?.totalUploadsSize,
+        storageUsed: stats?.uploadsSizeTotal,
         storageLimit: activePlan?.limits?.storageLimit,
       });
     }
