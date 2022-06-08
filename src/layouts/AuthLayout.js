@@ -30,9 +30,9 @@ const AuthLayout =
         <UserProvider {...userProviderProps}>
           <Layout>
             <SloganContainer className="pl-20 pr-20 lg:pr-30 xl:pr-40">
-              <div className="">
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl text-white">
-                  The decentralized <span className="text-primary">revolution</span> starts with decentralized storage
+              <div>
+                <h1 className="text-4xl lg:text-5xl xl:text-6xl text-white font-normal">
+                  The decentralized <span className="text-primary font-semibold">revolution</span> starts with decentralized storage
                 </h1>
               </div>
             </SloganContainer>
