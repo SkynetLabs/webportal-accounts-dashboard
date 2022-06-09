@@ -50,11 +50,15 @@ export const PlansProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const hasError = plansError || limitsError;
+    const hasAllData = settings.isSubscriptionRequired ? rawPlans?.length > 0 : rawPlans?.length > 1;
+    const isLoading = !hasError && !hasAllData;
+
+    setLoading(isLoading);
+
     if (plansError || limitsError) {
-      setLoading(false);
       setError(plansError || limitsError);
     } else if (rawPlans || limits) {
-      setLoading(false);
       setPlans(
         aggregatePlansAndLimits(rawPlans || [], limits?.userLimits, {
           includeFreePlan: !settings.isSubscriptionRequired,
