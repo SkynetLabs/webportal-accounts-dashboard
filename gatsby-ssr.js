@@ -9,6 +9,7 @@ import "@fontsource/sora/600.css"; // semibold
 import "@fontsource/source-sans-pro/400.css"; // normal
 import "@fontsource/source-sans-pro/600.css"; // semibold
 import "./src/styles/global.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import swrConfig from "./src/lib/swrConfig";
 import { MODAL_ROOT_ID } from "./src/components/Modal";
 import { PortalSettingsProvider } from "./src/contexts/portal-settings";

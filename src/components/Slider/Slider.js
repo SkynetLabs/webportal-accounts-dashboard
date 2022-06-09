@@ -27,7 +27,7 @@ const Scroller = styled.div.attrs({
   ${({ $scrollable }) => ($scrollable ? scrollableStyles : "")}
 `;
 
-const Slider = ({ slides, breakpoints, scrollerClassName, className }) => {
+const Slider = ({ slides, breakpoints, scrollerClassName, className, loading, SlideSkeletonComponent }) => {
   const { visibleSlides, scrollable } = useActiveBreakpoint(breakpoints);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const changeSlide = React.useCallback(
@@ -38,6 +38,8 @@ const Slider = ({ slides, breakpoints, scrollerClassName, className }) => {
     },
     [slides, visibleSlides, setActiveIndex]
   );
+  const loadingSlides = Array(visibleSlides).fill(null);
+  const showSkeletonSlides = Boolean(loading && SlideSkeletonComponent);
 
   React.useEffect(() => {
     // Prevent negative values for activeIndex.
@@ -53,29 +55,36 @@ const Slider = ({ slides, breakpoints, scrollerClassName, className }) => {
     <Container className={className}>
       <Scroller
         $visibleSlides={visibleSlides}
-        $allSlides={slides.length}
+        $allSlides={showSkeletonSlides ? visibleSlides : slides.length}
         $activeIndex={activeIndex}
         $scrollable={scrollable}
         className={scrollerClassName}
       >
-        {slides.map((slide, index) => {
-          const isVisible = index >= activeIndex && index < activeIndex + visibleSlides;
-
-          return (
+        {showSkeletonSlides &&
+          loadingSlides.map((_, index) => (
             <div key={`slide-${index}`} className="h-full">
-              <Slide
-                isVisible={isVisible || !scrollable}
-                onClickCapture={
-                  scrollable && !isVisible
-                    ? (event) => changeSlide(event, index > activeIndex ? activeIndex + 1 : activeIndex - 1)
-                    : null
-                }
-              >
-                {slide}
-              </Slide>
+              <SlideSkeletonComponent key={index} />
             </div>
-          );
-        })}
+          ))}
+        {!showSkeletonSlides &&
+          slides.map((slide, index) => {
+            const isVisible = index >= activeIndex && index < activeIndex + visibleSlides;
+
+            return (
+              <div key={`slide-${index}`} className="h-full">
+                <Slide
+                  isVisible={isVisible || !scrollable}
+                  onClickCapture={
+                    scrollable && !isVisible
+                      ? (event) => changeSlide(event, index > activeIndex ? activeIndex + 1 : activeIndex - 1)
+                      : null
+                  }
+                >
+                  {slide}
+                </Slide>
+              </div>
+            );
+          })}
       </Scroller>
       {scrollable && (
         <Bullets
@@ -115,6 +124,14 @@ Slider.propTypes = {
        * Additional class names to apply to the <Container /> element.
        */
       className: PropTypes.string,
+      /**
+       * Indicate whether contents of the slider is still loading
+       */
+      loading: PropTypes.boolean,
+      /**
+       * Specify a component that should be used as a placeholder for slides while data is being loaded.
+       */
+      SlideSkeletonComponent: PropTypes.element,
     })
   ),
 };

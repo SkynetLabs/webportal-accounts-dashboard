@@ -3,7 +3,6 @@ import { useMedia } from "react-use";
 
 import theme from "../lib/theme";
 import { PlansProvider } from "../contexts/plans/PlansProvider";
-import { ArrowRightIcon } from "../components/Icons";
 import { Panel } from "../components/Panel";
 import { Tab, TabPanel, Tabs } from "../components/Tabs";
 import LatestActivity from "../components/LatestActivity/LatestActivity";
@@ -48,24 +47,10 @@ const IndexPage = () => {
                     </TabPanel>
                   </Tabs>
                 </Panel>,
-                <Panel
-                  title={
-                    <>
-                      <ArrowRightIcon /> Usage
-                    </>
-                  }
-                  className="h-[330px]"
-                >
+                <Panel title="Usage" className="h-[330px]">
                   <CurrentUsage />
                 </Panel>,
-                <Panel
-                  title={
-                    <>
-                      <ArrowRightIcon /> Current plan
-                    </>
-                  }
-                  className="h-[330px]"
-                >
+                <Panel title="Current plan" className="h-[330px]">
                   <CurrentPlan />
                 </Panel>,
               ]}
