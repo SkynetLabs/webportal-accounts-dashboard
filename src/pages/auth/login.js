@@ -1,9 +1,17 @@
 import { navigate } from "gatsby";
-import isUrl from "is-url";
 import AuthLayout from "../../layouts/AuthLayout";
 import { LoginForm } from "../../components/forms";
 import { useUser } from "../../contexts/user";
 import { Metadata } from "../../components/Metadata";
+
+const isUrl = (url) => {
+  try {
+    new URL(url); // try to parse it, throws on invalid url
+  } catch {
+    return false;
+  }
+  return true;
+};
 
 const LoginPage = ({ location }) => {
   const { mutate: refreshUserState } = useUser();
