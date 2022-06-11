@@ -26,6 +26,7 @@ export const PortalSettingsProvider = ({ children }) => {
     }
     if (data) {
       setSettings({
+        ...defaultSettings,
         areAccountsEnabled: data.enabled,
         isAuthenticationRequired: data.auth_required,
         isSubscriptionRequired: data.subscription_required,
