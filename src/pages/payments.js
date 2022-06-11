@@ -21,6 +21,31 @@ const Page = () => {
   const stripe = useStripe();
   const hasError = userError || plansError;
 
+  /**
+   * It happened in the past that users subscribed via Stripe, but after coming back
+   * to the dashboard they didn't see their subscription activated, so they subscribed
+   * again (sometimes multiple times).
+   *
+   * The reason they didn't see their subscription activated in our dashboard is because
+   * Stripe is notifying us about purchased subscriptions via webhook events.
+   * If these events are delayed for whatever reason, dashboard has no way of knowing about
+   * the purchase.
+   *
+   * To prevent users from attempting consecutive purchases, we'll show a warning saying
+   * that the plan activation may take some time.
+   *
+   * We attempt to only show this warning to users this may relate to. It's not  a bullet-proof
+   * check, but should take care of most situations:
+   *
+   *    - stripeCustomerId is populated when user accesses our Stripe checkout
+   *      for the first time.
+   *    - subscriptionStatus is populated only when we get a webhook call from Stripe
+   *
+   * We'll show the warning when stripeCustomerId was created, but subscriptionStatus is blank.
+   * It may produce false positives, but we're fine with it for the time being.
+   */
+  const hasProbablyJustSubscribed = user.stripeCustomerId && !user.subscriptionStatus;
+
   const handleSubscribe = async (selectedPlan) => {
     try {
       const { sessionId } = await accountsService
@@ -53,6 +78,25 @@ const Page = () => {
               </HighlightedLink>{" "}
               to store up to 100GB for free.
             </p>
+          </Alert>
+        )}
+        {hasProbablyJustSubscribed && (
+          <Alert $variant="warning" className="mb-6">
+            <p className="mt-0">
+              <strong>When you subscribe</strong>, it may take a few minutes for your new plan to be activated on our
+              portal.
+            </p>
+            {settings.supportEmail ? (
+              <p>
+                If it takes longer, please contact us at{" "}
+                <HighlightedLink as="a" href={`mailto:${settings.supportEmail}`}>
+                  {settings.supportEmail}
+                </HighlightedLink>{" "}
+                and we'll get this sorted out.
+              </p>
+            ) : (
+              <p>If it takes longer, please contact us and we'll get this sorted out.</p>
+            )}
           </Alert>
         )}
         {hasError && (
