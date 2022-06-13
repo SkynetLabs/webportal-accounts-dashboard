@@ -124,16 +124,16 @@ Slider.propTypes = {
        * Additional class names to apply to the <Container /> element.
        */
       className: PropTypes.string,
-      /**
-       * Indicate whether contents of the slider is still loading
-       */
-      loading: PropTypes.boolean,
-      /**
-       * Specify a component that should be used as a placeholder for slides while data is being loaded.
-       */
-      SlideSkeletonComponent: PropTypes.element,
     })
   ),
+  /**
+   * Indicate whether contents of the slider is still loading
+   */
+  loading: PropTypes.bool,
+  /**
+   * Specify a component that should be used as a placeholder for slides while data is being loaded.
+   */
+  SlideSkeletonComponent: PropTypes.elementType,
 };
 
 Slider.defaultProps = {
@@ -156,6 +156,7 @@ Slider.defaultProps = {
   ],
   scrollerClassName: "gap-4",
   className: "",
+  loading: false,
 };
 
 export default Slider;
