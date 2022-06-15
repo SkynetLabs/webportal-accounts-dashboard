@@ -61,7 +61,7 @@ export const SignUpForm = ({ onSuccess, onFailure }) => (
       }
     }}
   >
-    {({ errors, touched }) => (
+    {({ errors, touched, isSubmitting }) => (
       <Form className="flex flex-col gap-4">
         <TextField
           type="text"
@@ -91,8 +91,8 @@ export const SignUpForm = ({ onSuccess, onFailure }) => (
         />
 
         <div className="flex w-full justify-center mt-4">
-          <Button type="submit" className="px-12" $primary>
-            Sign up!
+          <Button type="submit" className="px-12" $primary disabled={isSubmitting}>
+            {isSubmitting ? "Signing up..." : "Sign up!"}
           </Button>
         </div>
       </Form>
