@@ -1,3 +1,4 @@
+import { navigate } from "gatsby";
 import { useCallback, useState } from "react";
 
 import AuthLayout from "../../layouts/AuthLayout";
@@ -10,6 +11,7 @@ import { PlansProvider, usePlans } from "../../contexts/plans";
 import { Metadata } from "../../components/Metadata";
 import { useUser } from "../../contexts/user";
 import humanBytes from "../../lib/humanBytes";
+import useRedirectParam from "../../hooks/useRedirectParam";
 
 const FreePortalHeader = () => {
   const { plans } = usePlans();
@@ -44,16 +46,23 @@ const State = {
   Failure: "FAILURE",
 };
 
-const SignUpPage = () => {
+const SignUpPage = ({ location }) => {
   const [state, setState] = useState(State.Pure);
   const { settings } = usePortalSettings();
   const { mutate: refreshUserState } = useUser();
+  const { url, internal } = useRedirectParam(location);
 
   const onUserCreated = useCallback(
-    (newUser) => {
-      refreshUserState(newUser);
+    async (newUser) => {
+      // For internal redirect, wait for user state to be refreshed to avoid
+      // authenticated user state being used before user state is refreshed
+      if (!url || internal) {
+        await refreshUserState();
+      }
+
+      navigate(url || "/");
     },
-    [refreshUserState]
+    [refreshUserState, url, internal]
   );
 
   return (
