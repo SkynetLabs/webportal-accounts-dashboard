@@ -49,7 +49,7 @@ export const LoginForm = ({ onSuccess }) => {
         }
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, isSubmitting }) => (
         <Form className="flex flex-col gap-4">
           <h3 className="mt-4 mb-4">Log in to your account</h3>
           {error && <p className="px-4 py-3 rounded border border-error bg-red-50 text-error mb-4">{error}</p>}
@@ -76,13 +76,16 @@ export const LoginForm = ({ onSuccess }) => {
           </div>
 
           <div className="flex w-full justify-center mt-4">
-            <Button type="submit" className="px-12" $primary>
-              Log in
+            <Button type="submit" className="px-12" $primary disabled={isSubmitting}>
+              {isSubmitting ? "Logging in..." : "Log in"}
             </Button>
           </div>
 
           <p className="text-sm text-center mt-8">
-            Don't have an account? <HighlightedLink to="/auth/registration">Sign up</HighlightedLink>
+            Don't have an account?{" "}
+            <HighlightedLink to="/auth/registration" persistQueryString>
+              Sign up
+            </HighlightedLink>
           </p>
         </Form>
       )}
