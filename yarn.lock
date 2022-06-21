@@ -4081,10 +4081,10 @@
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@^1.27.0":
-  version "1.27.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.27.0.tgz#ab0c82fa89fd40260de4414f69868b769e810550"
-  integrity sha512-SEiybUBu+tlsFKuzdFFydxxjkbrdzHo0tz/naYC5Dt9or/Ux2gcKJBPYQ4RmqQCNHFxgyNj6UYsclywwhe2inQ==
+"@stripe/stripe-js@^1.31.0":
+  version "1.31.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.31.0.tgz#2920bdddc3eabb5734f9ca794824e25b378533ac"
+  integrity sha512-drlXsNvd/s9S1+Ghja0aDB81N3Wr/6iRAZ7MOzKv7AtKxVdvGpOwESw3z1lHl/Wx/rvPpA7whKdB3W2CnVSArw==
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
