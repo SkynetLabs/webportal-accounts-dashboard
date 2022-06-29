@@ -4,7 +4,7 @@ require("dotenv").config({
 
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const { GATSBY_PORTAL_DOMAIN } = process.env;
+const { GATSBY_PORTAL_DOMAIN, GATSBY_HOST } = process.env;
 
 module.exports = {
   siteMetadata: {
@@ -37,6 +37,27 @@ module.exports = {
         target: `https://account.${GATSBY_PORTAL_DOMAIN}`,
         secure: false, // Do not reject self-signed certificates.
         changeOrigin: true,
+        // We need to get rid of "secure" flag in the authorization cookie:
+        onProxyRes(proxyResponse, req, serverResponse) {
+          const originalCookies = proxyResponse.headers["set-cookie"];
+
+          if (Array.isArray(originalCookies)) {
+            console.log("Attempt at making the cookie insecure");
+            const newCookies = originalCookies.map((cookie) => {
+              const attributes = cookie.split("; ");
+              // Retain all cookie attributes besides "Secure" flag:
+              const filtered = attributes.filter((attr) => attr.trim().toLowerCase() !== "secure");
+
+              return filtered.join("; ");
+            });
+
+            proxyResponse.headers["set-cookie"] = newCookies;
+          }
+        },
+        cookieDomainRewrite: {
+          // Allows logging in on localhost
+          [GATSBY_PORTAL_DOMAIN]: GATSBY_HOST || "localhost",
+        },
       })
     );
 

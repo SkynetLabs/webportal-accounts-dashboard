@@ -2,6 +2,14 @@ node_modules/
 .cache/
 public/
 storybook-build/
+coverage/
+.vscode/
+
+.DS_Store
 
 # dotenv environment variable files
 .env*
+
+# Cypress generated files
+cypress/screenshots
+cypress/videos
