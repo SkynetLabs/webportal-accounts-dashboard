@@ -17,10 +17,9 @@
     "lint": "eslint .",
     "prettier": "prettier --check .",
     "format": "prettier --write .",
-    "test": "yarn test:unit",
-    "test:unit": "LANG=en_US jest src --coverage && codecov",
-    "test:unit:watch": "jest src --watch",
-    "test:e2e": "start-test start 8000 'cypress run --record'",
+    "test": "LANG=en_US jest src --coverage && codecov",
+    "test:watch": "LANG=en_US jest src --watch",
+    "cypress": "cypress run",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o storybook-build"
   },
@@ -93,7 +92,6 @@
     "prettier": "2.5.1",
     "react-is": "^17.0.2",
     "react-test-renderer": "^18.2.0",
-    "start-server-and-test": "^1.14.0",
     "storybook-addon-gatsby": "^0.0.5",
     "styled-components": "^5.3.5"
   }
