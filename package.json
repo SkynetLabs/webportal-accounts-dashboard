@@ -17,10 +17,10 @@
     "lint": "eslint .",
     "prettier": "prettier --check .",
     "format": "prettier --write .",
-    "test": "yarn test:unit && yarn test:e2e",
+    "test": "yarn test:unit",
     "test:unit": "LANG=en_US jest src --coverage && codecov",
     "test:unit:watch": "jest src --watch",
-    "test:e2e": "start-test start 8000 'cypress run'",
+    "test:e2e": "start-test start 8000 'cypress run --record'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o storybook-build"
   },

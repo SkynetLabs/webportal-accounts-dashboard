@@ -37,6 +37,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: "Integration tests"
+        uses: cypress-io/github-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        with:
+          install: false
+          record: true
+          browser: chrome
+          start: yarn start
+          wait-on: http://localhost:8000
+          wait-on-timeout: 120
+          config: baseUrl=http://localhost:8000
+
   publish:
     runs-on: ubuntu-latest
     steps:
