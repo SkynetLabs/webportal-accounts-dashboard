@@ -8,8 +8,8 @@
     "gatsby"
   ],
   "scripts": {
-    "develop": "dotenv -e .env.development -- gatsby develop",
-    "develop:secure": "dotenv -e .env.development -- gatsby develop --https -p=443",
+    "develop": "gatsby develop",
+    "develop:secure": "gatsby develop --https -p=443",
     "start": "yarn develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
@@ -17,10 +17,10 @@
     "lint": "eslint . --ext js,json",
     "prettier": "prettier --check .",
     "format": "prettier --write .",
-    "test": "yarn test:unit && start-test start 8000 test:e2e",
+    "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "LANG=en_US jest src --coverage && codecov",
     "test:unit:watch": "jest src --watch",
-    "test:e2e": "cypress run",
+    "test:e2e": "start-test start 8000 'cypress run'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o storybook-build"
   },
