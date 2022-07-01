@@ -20,8 +20,9 @@ This file allows to easily control which domain name you want to use locally and
 Example:
 
 ```env
-GATSBY_PORTAL_DOMAIN=skynetfree.net # Use skynetfree.net APIs
+PORTAL_DOMAIN=skynetfree.net # Use skynetfree.net APIs
 GATSBY_HOST=local.skynetfree.net # Address of your local build
+STRIPE_PUBLISHABLE_KEY=asdf_1234
 ```
 
 > It's recommended to keep the 2LD the same, so any cookies dispatched by the API work without issues.

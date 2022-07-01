@@ -1,9 +1,9 @@
 import { createContext } from "react";
 
-const { GATSBY_PORTAL_DOMAIN } = process.env;
+const { PORTAL_DOMAIN } = process.env;
 
 export const defaultSettings = {
-  supportEmail: GATSBY_PORTAL_DOMAIN ? `hello@${GATSBY_PORTAL_DOMAIN}` : null,
+  supportEmail: PORTAL_DOMAIN ? `hello@${PORTAL_DOMAIN}` : null,
   areAccountsEnabled: false,
   isAuthenticationRequired: false,
   isSubscriptionRequired: false,
