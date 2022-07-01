@@ -4,12 +4,12 @@ require("dotenv").config({
 
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const { GATSBY_PORTAL_DOMAIN } = process.env;
+const { PORTAL_DOMAIN } = process.env;
 
 module.exports = {
   siteMetadata: {
     title: `Account Dashboard`,
-    siteUrl: `https://account.${GATSBY_PORTAL_DOMAIN}`,
+    siteUrl: `https://account.${PORTAL_DOMAIN}`,
   },
   trailingSlash: "never",
   plugins: [
@@ -28,13 +28,19 @@ module.exports = {
       },
       __key: "images",
     },
+    {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        allowList: ["PORTAL_DOMAIN", "STRIPE_PUBLISHABLE_KEY"],
+      },
+    },
   ],
   developMiddleware: (app) => {
     // Proxy Accounts service API requests:
     app.use(
       "/api/",
       createProxyMiddleware({
-        target: `https://account.${GATSBY_PORTAL_DOMAIN}`,
+        target: `https://account.${PORTAL_DOMAIN}`,
         secure: false, // Do not reject self-signed certificates.
         changeOrigin: true,
       })
@@ -44,7 +50,7 @@ module.exports = {
     app.use(
       ["/skynet", "/__internal/"],
       createProxyMiddleware({
-        target: `https://${GATSBY_PORTAL_DOMAIN}`,
+        target: `https://${PORTAL_DOMAIN}`,
         secure: false, // Do not reject self-signed certificates.
         changeOrigin: true,
         pathRewrite: {
