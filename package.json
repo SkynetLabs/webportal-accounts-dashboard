@@ -92,7 +92,6 @@
     "jest": "^28.1.1",
     "prettier": "2.5.1",
     "react-is": "^17.0.2",
-    "react-test-renderer": "^18.2.0",
     "storybook-addon-gatsby": "^0.0.5",
     "styled-components": "^5.3.5"
   }
