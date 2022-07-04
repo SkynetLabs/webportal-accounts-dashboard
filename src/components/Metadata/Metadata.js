@@ -35,7 +35,7 @@ export const Metadata = ({ children }) => {
       <meta name="msapplication-TileImage" content={msTileIcon} />
 
       <meta name="description" content="Manage your Skynet uploads, account subscription, settings and API keys" />
-      <link rel="preconnect" href={`https://${process.env.GATSBY_PORTAL_DOMAIN}/`} />
+      <link rel="preconnect" href={`https://${process.env.PORTAL_DOMAIN}/`} />
       {children}
     </Helmet>
   );
