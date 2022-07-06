@@ -21,7 +21,7 @@ Example:
 
 ```env
 PORTAL_DOMAIN=skynetfree.net # Use skynetfree.net APIs
-GATSBY_HOST=local.skynetfree.net # Address of your local build
+GATSBY_HOST=local.skynetfree.net # [Optional] Address of your local build in case you don't want to run it on localhost.
 STRIPE_PUBLISHABLE_KEY=asdf_1234
 ```
 
