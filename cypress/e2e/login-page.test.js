@@ -1,3 +1,5 @@
+/// <reference path="../cypress.d.ts" />
+
 context("/auth/login", () => {
   context("when user is not authenticated", () => {
     beforeEach(() => {
