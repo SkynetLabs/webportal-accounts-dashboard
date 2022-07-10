@@ -62,7 +62,7 @@ export const SignUpForm = ({ onSuccess, onFailure }) => (
     }}
   >
     {({ errors, touched, isSubmitting }) => (
-      <Form className="flex flex-col gap-4">
+      <Form className="flex flex-col gap-4" data-testid="SignUpForm">
         <TextField
           type="text"
           id="email"

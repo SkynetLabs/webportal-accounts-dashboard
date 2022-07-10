@@ -23,3 +23,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("getByTestId", (testId) => cy.get(`[data-testid="${testId}"]`));
+
+Cypress.Commands.add("mockPortalSettings", (fixture) =>
+  cy.intercept("/__internal/do/not/use/accounts", {
+    fixture: `portal/${fixture}.json`,
+  })
+);
+
+Cypress.Commands.add("mockUserIdentity", (identity) =>
+  cy.intercept("GET", "/api/user", {
+    fixture: `user/${identity}.json`,
+    statusCode: identity === "guest" ? 401 : 200,
+  })
+);

@@ -1,0 +1,14 @@
+{
+  "email": "test@skt.us",
+  "sub": "96f9bf3d561647809f133951f3e25667",
+  "tier": 1,
+  "createdAt": "2022-06-15T09:17:27.629Z",
+  "migratedAt": "0001-01-01T00:00:00Z",
+  "subscribedUntil": "0001-01-01T00:00:00Z",
+  "subscriptionStatus": "",
+  "subscriptionCancelAt": "0001-01-01T00:00:00Z",
+  "subscriptionCancelAtPeriodEnd": false,
+  "stripeCustomerId": "",
+  "quotaExceeded": false,
+  "emailConfirmed": false
+}
