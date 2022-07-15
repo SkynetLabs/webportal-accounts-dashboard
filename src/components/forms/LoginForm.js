@@ -50,7 +50,7 @@ export const LoginForm = ({ onSuccess }) => {
       }}
     >
       {({ errors, touched, isSubmitting }) => (
-        <Form className="flex flex-col gap-4">
+        <Form className="flex flex-col gap-4" data-testid="LoginForm">
           <h3 className="mt-4 mb-4">Log in to your account</h3>
           {error && <p className="px-4 py-3 rounded border border-error bg-red-50 text-error mb-4">{error}</p>}
           <TextField
@@ -70,7 +70,11 @@ export const LoginForm = ({ onSuccess }) => {
             touched={touched.password}
           />
           <div>
-            <Link to="/auth/reset-password" className="text-sm inline transition-colors hover:text-primary">
+            <Link
+              to="/auth/reset-password"
+              className="text-sm inline transition-colors hover:text-primary"
+              data-testid="ForgotPasswordLink"
+            >
               Forgot your password?
             </Link>
           </div>
@@ -83,7 +87,7 @@ export const LoginForm = ({ onSuccess }) => {
 
           <p className="text-sm text-center mt-8">
             Don't have an account?{" "}
-            <HighlightedLink to="/auth/registration" persistQueryString>
+            <HighlightedLink to="/auth/registration" data-testid="SignUpLink" persistQueryString>
               Sign up
             </HighlightedLink>
           </p>
