@@ -30,7 +30,7 @@ jobs:
       - name: "Run Yarn Basic Checks"
         uses: SkynetLabs/.github/.github/actions/yarn-basic-checks@master
         with:
-          node-version: 18.x
+          node-version: 16.x
 
       - name: "Integration tests"
         uses: cypress-io/github-action@v4
