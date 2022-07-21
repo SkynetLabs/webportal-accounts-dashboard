@@ -26,16 +26,11 @@ jobs:
     name: "Checks and Tests"
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [14.x, 16.x]
-
     steps:
       - name: "Run Yarn Basic Checks"
         uses: SkynetLabs/.github/.github/actions/yarn-basic-checks@master
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
 
       - name: "Integration tests"
         uses: cypress-io/github-action@v4
