@@ -35,7 +35,7 @@ const IndexPage = () => {
           <div className="w-full">
             <Slider
               slides={[
-                <Panel title="Upload" className="h-[330px]">
+                <Panel title="Upload" className="h-[330px]" data-testid="UploaderPanel">
                   <Tabs variant="fill">
                     <Tab id="files" title="Files" />
                     <Tab id="directory" title="Directory" />
