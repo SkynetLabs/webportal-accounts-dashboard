@@ -50,9 +50,20 @@ module.exports = {
           "0%, 100%": { transform: "rotate(-3deg)" },
           "50%": { transform: "rotate(3deg)" },
         },
+        spinningScaleDown: {
+          "0%": { transform: "scale(1.0)" },
+          "100%": { transform: "scale(0) rotate(180deg)" },
+        },
+        spinningScaleUp: {
+          "0%": { transform: "scale(0) rotate(-540deg)" },
+          "100%": { transform: "scale(1.0)" },
+        },
       },
       animation: {
+        spinningScaleUp: "spinningScaleUp .3s ease-in-out",
+        spinningScaleDown: "spinningScaleDown .3s ease-in-out",
         wiggle: "wiggle 3s ease-in-out infinite",
+        spin: "spin 3s linear infinite",
       },
       width: {
         modal: "500px",
