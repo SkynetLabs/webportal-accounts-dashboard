@@ -1,9 +1,10 @@
 import * as React from "react";
 import dayjs from "dayjs";
+import { Link } from "gatsby";
 import PropTypes from "prop-types";
 
 import { Metadata } from "../Metadata";
-import { ActionStateIcon } from "../Icons";
+import { ActionStateIcon, ArrowRightIcon } from "../Icons";
 import { Panel } from "../Panel";
 import HighlightedLink from "../HighlightedLink";
 
@@ -31,11 +32,17 @@ export const OrderConfirmation = ({ sessionId }) => {
   const { getPlanById } = usePlans();
   const [state, setState] = React.useState(State.Waiting);
   const [subscription, setSubscription] = React.useState(null);
+  const [isTakingTooLong, setIsTakingTooLong] = React.useState(false);
 
   React.useEffect(() => {
     const fetchSession = async () => {
       try {
-        const sub = await accountsService.get(`stripe/checkout/${sessionId}`).json();
+        const sub = await accountsService
+          .get(`stripe/checkout/${sessionId}`, {
+            timeout: 30_000,
+            retry: 5,
+          })
+          .json();
         setSubscription(sub);
         setState(sub.status === "active" ? State.Success : State.Failure);
       } catch (err) {
@@ -47,6 +54,11 @@ export const OrderConfirmation = ({ sessionId }) => {
 
     if (sessionId) {
       fetchSession();
+
+      // Show a "This is taking longer than usual" message after 10s of waiting.
+      const timer = setTimeout(() => setIsTakingTooLong(true), 10_000);
+
+      return () => clearTimeout(timer);
     }
   }, [sessionId, getPlanById]);
 
@@ -64,7 +76,17 @@ export const OrderConfirmation = ({ sessionId }) => {
           successClass="!text-primary"
           failureClass="!text-error"
         />
-        {state === State.Waiting && <h4 className="text-center">Confirming your purchase...</h4>}
+        {state === State.Waiting && (
+          <div className="text-center">
+            <h4>Confirming your purchase...</h4>
+
+            {isTakingTooLong ? (
+              <p className="text-palette-400">Sorry, this is taking longer than usual.</p>
+            ) : (
+              <p className="font-bold">Please wait...</p>
+            )}
+          </div>
+        )}
         {state === State.Failure && (
           <div className="text-center">
             <p className="font-bold mb-4">We encountered a problem contacting our payments provider.</p>
@@ -113,8 +135,13 @@ export const OrderConfirmation = ({ sessionId }) => {
           </>
         )}
         {state !== State.Waiting && (
-          <p className="my-4 text-center">
-            <HighlightedLink to="/">go back to the dashboard</HighlightedLink>
+          <p>
+            <Link className="inline-flex mt-6 items-center gap-3 ease-in-out hover:brightness-90" to="/">
+              <span className="bg-primary rounded-full w-[32px] h-[32px] inline-flex justify-center items-center">
+                <ArrowRightIcon />
+              </span>
+              <span className="font-sans text-xs uppercase text-palette-400">go to the dashboard</span>
+            </Link>
           </p>
         )}
       </div>
