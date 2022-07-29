@@ -7,19 +7,11 @@ import { Metadata } from "../Metadata";
 import { ActionStateIcon, ArrowRightIcon } from "../Icons";
 import { Panel } from "../Panel";
 import HighlightedLink from "../HighlightedLink";
-
-import { usePlans } from "../../contexts/plans";
 import { usePortalSettings } from "../../contexts/portal-settings";
-import accountsService from "../../services/accountsService";
 import { DATE_FORMAT } from "../../lib/config";
 
 import { PriceInfo } from "./PriceInfo";
-
-const State = {
-  Waiting: "Waiting",
-  Success: "Success",
-  Failure: "Failure",
-};
+import { useCheckoutSessionState, RequestState } from "./useCheckoutSessionState";
 
 const TITLE_BY_STATE = {
   Waiting: "Processing payment",
@@ -29,54 +21,23 @@ const TITLE_BY_STATE = {
 
 export const OrderConfirmation = ({ sessionId }) => {
   const { settings } = usePortalSettings();
-  const { getPlanById } = usePlans();
-  const [state, setState] = React.useState(State.Waiting);
-  const [subscription, setSubscription] = React.useState(null);
-  const [isTakingTooLong, setIsTakingTooLong] = React.useState(false);
-
-  React.useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const sub = await accountsService
-          .get(`stripe/checkout/${sessionId}`, {
-            timeout: 30_000,
-            retry: 5,
-          })
-          .json();
-        setSubscription(sub);
-        setState(sub.status === "active" ? State.Success : State.Failure);
-      } catch (err) {
-        setState(State.Failure);
-        setSubscription(null);
-        console.log(err);
-      }
-    };
-
-    if (sessionId) {
-      fetchSession();
-
-      // Show a "This is taking longer than usual" message after 10s of waiting.
-      const timer = setTimeout(() => setIsTakingTooLong(true), 10_000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [sessionId, getPlanById]);
+  const { requestState, subscription, isTakingTooLong } = useCheckoutSessionState(sessionId);
 
   return (
     <Panel className="px-3">
       <Metadata>
-        <title>{TITLE_BY_STATE[state]}</title>
+        <title>{TITLE_BY_STATE[requestState]}</title>
       </Metadata>
       <div className="w-full mb-8 flex flex-col gap-4 px-12 items-center">
         <ActionStateIcon
           size={100}
-          state={state}
+          state={requestState}
           className="transition-colors duration-300 ease-in-out"
           waitingClass="!text-palette-200/70"
           successClass="!text-primary"
           failureClass="!text-error"
         />
-        {state === State.Waiting && (
+        {requestState === RequestState.Waiting && (
           <div className="text-center">
             <h4>Confirming your purchase...</h4>
 
@@ -87,7 +48,7 @@ export const OrderConfirmation = ({ sessionId }) => {
             )}
           </div>
         )}
-        {state === State.Failure && (
+        {requestState === RequestState.Failure && (
           <div className="text-center">
             <p className="font-bold mb-4">We encountered a problem contacting our payments provider.</p>
             <p>
@@ -99,7 +60,7 @@ export const OrderConfirmation = ({ sessionId }) => {
             </p>
           </div>
         )}
-        {state === State.Success && (
+        {requestState === RequestState.Success && (
           <>
             <h4 className="text-center">Subscription activated!</h4>
             <div>
@@ -134,7 +95,7 @@ export const OrderConfirmation = ({ sessionId }) => {
             </div>
           </>
         )}
-        {state !== State.Waiting && (
+        {requestState !== RequestState.Waiting && (
           <p>
             <Link className="inline-flex mt-6 items-center gap-3 ease-in-out hover:brightness-90" to="/">
               <span className="bg-primary rounded-full w-[32px] h-[32px] inline-flex justify-center items-center">
