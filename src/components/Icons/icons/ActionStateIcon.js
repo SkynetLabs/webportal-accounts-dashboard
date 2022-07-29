@@ -4,7 +4,6 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { withIconProps } from "../withIconProps";
-import { CircledErrorIcon } from "./CircledErrorIcon";
 
 const SpinnerWrapper = styled("g").attrs(({ $animated }) => ({
   className: cn("origin-center", {
@@ -31,6 +30,13 @@ const Checkmark = () => (
     fill="currentColor"
     points="22.45 11.19 23.86 12.61 14.44 22.03 9.69 17.28 11.1 15.86 14.44 19.2 22.45 11.19"
     className="origin-center animate-spinningScaleUp"
+  />
+);
+
+const ExclamationPoint = () => (
+  <path
+    fill="currentColor"
+    d="M16,20.5c-.83,0-1.44,.67-1.44,1.5s.67,1.5,1.44,1.5c.83,0,1.44-.67,1.44-1.5,.06-.83-.61-1.5-1.44-1.5Zm0-2.5c.55,0,.94-.45,.94-1V8c0-.55-.45-1-.94-1s-1,.45-1,1v9c0,.55,.45,1,1,1Zm15.52,4.83L19.03,1.71C18.4,.64,17.26,0,16,0c-1.26,0-2.39,.64-3.03,1.71L.48,22.83c-.63,1.06-.64,2.33-.03,3.41,.63,1.1,1.77,1.76,3.06,1.76H28.5c1.28,0,2.42-.66,3.05-1.76,.61-1.07,.6-2.35-.03-3.41Zm-1.76,2.36c-.21,.52-.71,.81-1.31,.81H3.51c-.56,0-1.05-.28-1.32-.75-.25-.45-.25-.96,0-1.4L14.69,2.73c.27-.46,.76-.73,1.31-.73h0c.55,0,1.03,.27,1.3,.73l12.49,21.12c.21,.44,.27,.95-.04,1.34Z"
   />
 );
 
@@ -77,9 +83,11 @@ export const ActionStateIcon = withIconProps(
         })}
         {...props}
       >
-        <circle cx="16" cy="16" r="15" fill="transparent" stroke="currentColor" strokeWidth="2" />
+        {state !== State.Failure && (
+          <circle cx="16" cy="16" r="15" fill="transparent" stroke="currentColor" strokeWidth="2" />
+        )}
         {showSpinner && <Spinner ref={spinner} animated={!complete} />}
-        {state === State.Failure && <CircledErrorIcon />}
+        {state === State.Failure && <ExclamationPoint />}
         {state === State.Success && <Checkmark />}
       </svg>
     );

@@ -35,14 +35,14 @@ export const OrderConfirmation = ({ sessionId }) => {
           className="transition-colors duration-300 ease-in-out"
           waitingClass="!text-palette-200/70"
           successClass="!text-primary"
-          failureClass="!text-error"
+          failureClass="!text-warning"
         />
         {requestState === RequestState.Waiting && (
           <div className="text-center">
             <h4>Confirming your purchase...</h4>
 
             {isTakingTooLong ? (
-              <p className="text-palette-400">Sorry, this is taking longer than usual.</p>
+              <p className="text-palette-400">Please wait, this is taking longer than usual.</p>
             ) : (
               <p className="font-bold">Please wait...</p>
             )}
@@ -52,7 +52,11 @@ export const OrderConfirmation = ({ sessionId }) => {
           <div className="text-center">
             <p className="font-bold mb-4">We encountered a problem contacting our payments provider.</p>
             <p>
-              If you purchased a subscription, but don't see it on your account, please contact us at{" "}
+              Your subscription status should be updated soon, please check back in a couple of minutes and refresh the
+              page.
+            </p>
+            <p>
+              If afterwards it's still not updated, please contact us at{" "}
               <HighlightedLink as="a" href={`mailto:${settings.supportEmail}`}>
                 {settings.supportEmail}
               </HighlightedLink>
