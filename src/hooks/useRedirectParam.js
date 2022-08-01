@@ -1,6 +1,7 @@
+import useQueryParam from "./useQueryParam";
+
 export default function useRedirectParam(location) {
-  const query = new URLSearchParams(location.search);
-  const redirectTarget = query.get("return_to");
+  const redirectTarget = useQueryParam("return_to", location);
 
   return {
     // Convert absolute, internal URLs into paths

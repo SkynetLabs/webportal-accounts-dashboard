@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "develop:secure": "gatsby develop --https -p=443",
+    "develop:secure": "dotenv -e .env.development -- gatsby develop --https -p=443",
     "start": "yarn develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
