@@ -47,7 +47,7 @@
     "react-loading-skeleton": "^3.1.0",
     "react-use": "^17.4.0",
     "skynet-js": "4.0.27-beta",
-    "swr": "^1.2.2",
+    "swr": "^1.3.0",
     "tailwindcss": "^3.0.23",
     "yup": "^0.32.11"
   },
