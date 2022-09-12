@@ -52,7 +52,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.4",
+    "@babel/core": "^7.18.13",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.4.19",
     "@storybook/addon-interactions": "^6.5.8",
