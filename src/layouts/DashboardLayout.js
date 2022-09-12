@@ -5,6 +5,7 @@ import { PageContainer } from "../components/PageContainer";
 import { NavBar } from "../components/NavBar";
 import { Footer } from "../components/Footer";
 import { UserProvider, useUser } from "../contexts/user";
+import { PlansProvider } from "../contexts/plans/PlansProvider";
 import { FullScreenLoadingIndicator } from "../components/LoadingIndicator";
 
 import dashboardBg from "../../static/images/dashboard-bg.svg";
@@ -30,15 +31,15 @@ const Layout = ({ children }) => {
 };
 
 const DashboardLayout = ({ children }) => (
-  <>
-    <UserProvider>
+  <UserProvider>
+    <PlansProvider>
       <Layout>
         <NavBar />
         <PageContainer className="mt-2 md:mt-14">{children}</PageContainer>
         <Footer />
       </Layout>
-    </UserProvider>
-  </>
+    </PlansProvider>
+  </UserProvider>
 );
 
 export default DashboardLayout;

@@ -42,8 +42,13 @@ const aggregatePlansAndLimits = (plans, limits, { includeFreePlan }) => {
 
 export const PlansProvider = ({ children }) => {
   const { settings } = usePortalSettings();
-  const { data: rawPlans, error: plansError } = useSWRImmutable("stripe/prices");
   const { data: limits, error: limitsError } = useSWRImmutable("limits");
+  let { data: rawPlans, error: plansError } = useSWRImmutable("stripe/prices");
+
+  // if the error is that stripe is not configured but portal does not require subscriptions, we can ignore it
+  if (plansError?.message === "Stripe integration is not configured" && !settings.isSubscriptionRequired) {
+    plansError = null;
+  }
 
   const [plans, setPlans] = useState(settings.isSubscriptionRequired ? [] : [freePlan]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +56,7 @@ export const PlansProvider = ({ children }) => {
 
   useEffect(() => {
     const hasError = plansError || limitsError;
-    const hasAllData = settings.isSubscriptionRequired ? rawPlans?.length > 0 : rawPlans?.length > 1;
+    const hasAllData = settings.isSubscriptionRequired ? rawPlans && limits : limits;
     const isLoading = !hasError && !hasAllData;
 
     setLoading(isLoading);
