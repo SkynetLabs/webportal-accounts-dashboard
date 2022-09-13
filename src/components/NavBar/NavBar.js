@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { screen } from "../../lib/cssHelpers";
 import { useUser } from "../../contexts/user";
+import { usePlans } from "../../contexts/plans";
 import { DropdownMenu, DropdownMenuLink } from "../DropdownMenu";
 import { CogIcon, LockClosedIcon, SkynetLogoIcon } from "../Icons";
 import { PageContainer } from "../PageContainer";
@@ -52,6 +53,7 @@ const NavBarBody = styled.nav.attrs({
 
 export const NavBar = () => {
   const { mutate: setUserState } = useUser();
+  const { plans } = usePlans();
 
   const onLogout = async () => {
     try {
@@ -79,9 +81,11 @@ export const NavBar = () => {
             <NavBarLink to="/files" as={Link} activeClassName="!border-b-primary">
               Files
             </NavBarLink>
-            <NavBarLink to="/payments" as={Link} activeClassName="!border-b-primary">
-              Payments
-            </NavBarLink>
+            {plans.some(({ price }) => price > 0) && (
+              <NavBarLink to="/payments" as={Link} activeClassName="!border-b-primary">
+                Payments
+              </NavBarLink>
+            )}
           </NavBarSection>
           <NavBarSection className="dropdown-area justify-end">
             <DropdownMenu title="My account">
